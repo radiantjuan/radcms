@@ -3,7 +3,8 @@ import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 const initialState = {
     loading: true,
     content_modal_show: false,
-    content_types: []
+    content_types: [],
+    contents: []
 }
 
 export const fetchPage = createAsyncThunk('page/fetchpage', async (id) => {
@@ -87,6 +88,7 @@ export const pageSlice = createSlice({
             state.loading = true;
         }).addCase(fetchPage.fulfilled, (state, action) => {
             state.loading = false;
+            state.contents = action.payload.contents;
         }).addCase(fetchPage.rejected, (state) => {
             state.loading = false;
         }).addCase(updatePage.pending, (state) => {

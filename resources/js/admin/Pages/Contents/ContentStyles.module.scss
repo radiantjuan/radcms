@@ -4,22 +4,4 @@
     box-sizing: content-box;
     transition: 0.2s;
     border: 3px dotted #cccccc;
-    padding-top:30px;
-    padding-bottom:30px;
-
-    .ContainerControls {
-        position: absolute;
-        left: 50%;
-        bottom: 10px;
-        transform: translateX(-50%);
-        display: none;
-    }
-
-    &:hover {
-        border: 3px solid green;
-
-        .ContainerControls {
-            display: block;
-        }
-    }
 }

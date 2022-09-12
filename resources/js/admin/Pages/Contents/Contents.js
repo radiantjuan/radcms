@@ -1,19 +1,20 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useId} from 'react';
 import cssCLasses from './ContentStyles.module.scss';
 import ContentModal from "../Shared/ContentModal";
 import {toggleContentModal} from "../PagesReducers/pageSlice";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import ContentTypeLayout from "../Shared/ContentTypeLayout";
 
 const Contents = (props) => {
     const [contentTemplate, setContentTemplate] = useState('');
+    const {loading} = useSelector(({pageReducer}) => pageReducer);
     const dispatch = useDispatch();
     const iterateContents = (contents) => {
         return contents.map((val) => {
             if (val.children_content.length > 0) {
-                return (<ContentTypeLayout key={val.id} type={val.content_type.id} attributes={val.attributes}>{iterateContents(val.children_content)}</ContentTypeLayout>);
+                return (<ContentTypeLayout key={val.id} content_id={val.id} content_type={val.content_type} attributes={val.attributes}>{iterateContents(val.children_content)}</ContentTypeLayout>);
             }
-            return (<ContentTypeLayout key={val.id} type={val.content_type.id} attributes={val.attributes}>{val.value}</ContentTypeLayout>);
+            return (<ContentTypeLayout key={val.id} content_id={val.id} content_type={val.content_type} attributes={val.attributes}>{val.value}</ContentTypeLayout>);
         });
     }
 
@@ -66,13 +67,17 @@ const Contents = (props) => {
                 </div>
             </div>
             <h3>Enter Content Here</h3>
-            <div className={cssCLasses.ContentContainer}>
-                <div className="container-fluid">
-                    {contentTemplate}
-                </div>
-                <div className={cssCLasses.ContainerControls}>
-                    <button className="btn btn-primary" onClick={() => dispatch(toggleContentModal(true))}><i className="fa fa-plus"></i> Add Container / Content</button>
-                </div>
+            <div id="contentContainerParent" className={cssCLasses.ContentContainer + ' p-1'}>
+                {(loading) ? 'loading...' : (
+                    <React.Fragment>
+                        <div className="container-fluid">
+                            {contentTemplate}
+                        </div>
+                        <div className="my-2 text-center">
+                            <button className="btn btn-primary btn-sm" onClick={() => dispatch(toggleContentModal(true))}><i className="fa fa-plus"></i></button>
+                        </div>
+                    </React.Fragment>
+                )}
             </div>
             <ContentModal />
             <footer className="p-3 bg-dark mt-3">

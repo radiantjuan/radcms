@@ -12,12 +12,11 @@ import {fetchPage} from "./PagesReducers/pageSlice";
 const EditPage = () => {
     const {id} = useParams();
     const dispatch = useDispatch();
-    const {loading} = useSelector(({pageReducer}) => pageReducer);
+    const {loading, contents} = useSelector(({pageReducer}) => pageReducer);
 
     //local variables
     const [title, setTitle] = useState('');
     const [published, setPublished] = useState(false);
-    const [contents, setContents] = useState();
 
     const formEventHandler = (event) => {
         switch (event.target.id) {
@@ -59,7 +58,6 @@ const EditPage = () => {
         const result = (await dispatch(fetchPage(id)));
         setTitle(result.payload.title);
         setPublished(result.payload.published);
-        setContents(result.payload.contents);
     }, []);
 
     const BasicForm = (

@@ -2,21 +2,25 @@ import React, {useEffect, useState} from 'react';
 import {Modal, Button, Container, Form} from 'react-bootstrap';
 import {useDispatch, useSelector} from "react-redux";
 import {fetchContentTypes, toggleContentModal} from "../PagesReducers/pageSlice";
-import ContentTypeFields from "./ContentTypeFields";
+import ContentTypeSettings from "./ContentTypeSettings";
 
 const ContentModal = (props) => {
     const {content_modal_show, content_types} = useSelector(({pageReducer}) => pageReducer);
-    const [content_type, setContentType] = useState([]);
+    const [content_type, setContentType] = useState(0);
     const dispatch = useDispatch();
 
     const content_type_options = content_types.map((val) => {
-       return (
-           <option value={val.id} key={val.id}>{val.name}</option>
-       )
+        return (
+            <option value={val.name} key={val.id}>{val.name}</option>
+        )
     });
 
     const onContentTypeChange = (event) => {
-        setContentType(parseInt(event.target.value));
+        setContentType(event.target.value);
+    }
+
+    const addEditContentHandler = () => {
+        dispatch(toggleContentModal(false));
     }
 
     useEffect(() => {
@@ -41,14 +45,14 @@ const ContentModal = (props) => {
                             {content_type_options}
                         </Form.Select>
                     </Form.Group>
-                    <ContentTypeFields type={content_type}/>
+                    <ContentTypeSettings type={content_type}/>
                 </Container>
             </Modal.Body>
             <Modal.Footer>
                 <Button variant="secondary" onClick={() => dispatch(toggleContentModal(false))}>
                     Cancel
                 </Button>
-                <Button variant="primary" onClick={() => dispatch(toggleContentModal(false))}>
+                <Button variant="primary" onClick={addEditContentHandler}>
                     Save
                 </Button>
             </Modal.Footer>
