@@ -3,6 +3,7 @@ import {CONTENT_TYPE_ROW, CONTENT_TYPE_COL} from './contentTypeConstants';
 import  cssClasses from './SharedStyling/ContentTypeLayout.module.scss';
 import {toggleContentModal} from "../PagesReducers/pageSlice";
 import {useDispatch} from "react-redux";
+import {setContentParentId} from "../PagesReducers/contentModalSlice";
 
 const ContentTypeLayout = (props) => {
     const [attributes, setAttributes] = useState(typeof props.attributes !== "undefined" ? JSON.parse(props.attributes) : '');
@@ -23,7 +24,10 @@ const ContentTypeLayout = (props) => {
                     <small className={cssClasses.ContentLabel + ' bg-primary'}>{props.content_type.name}</small>
                     {props.children}
                     <div className="my-2 text-center">
-                        <button className="btn btn-primary btn-sm" onClick={() => dispatch(toggleContentModal(true))}><i className="fa fa-plus"></i></button>
+                        <button className="btn btn-primary btn-sm" onClick={() => {
+                            dispatch(toggleContentModal(true));
+                            dispatch(setContentParentId(props.content_id));
+                        }}><i className="fa fa-plus"></i></button>
                     </div>
                 </div>
             )

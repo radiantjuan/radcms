@@ -4,6 +4,7 @@ import ContentModal from "../Shared/ContentModal";
 import {toggleContentModal} from "../PagesReducers/pageSlice";
 import {useDispatch, useSelector} from "react-redux";
 import ContentTypeLayout from "../Shared/ContentTypeLayout";
+import {setContentParentId} from "../PagesReducers/contentModalSlice";
 
 const Contents = (props) => {
     const [contentTemplate, setContentTemplate] = useState('');
@@ -74,7 +75,10 @@ const Contents = (props) => {
                             {contentTemplate}
                         </div>
                         <div className="my-2 text-center">
-                            <button className="btn btn-primary btn-sm" onClick={() => dispatch(toggleContentModal(true))}><i className="fa fa-plus"></i></button>
+                            <button className="btn btn-primary btn-sm" onClick={() => {
+                                dispatch(toggleContentModal(true));
+                                dispatch(setContentParentId(0))
+                            }}><i className="fa fa-plus"></i></button>
                         </div>
                     </React.Fragment>
                 )}

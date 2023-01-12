@@ -72,6 +72,7 @@ const initialState = {
             settings_values: {}
         }
     },
+    content_parent_id: null
 }
 
 export const contentModalSlice = createSlice({
@@ -87,11 +88,17 @@ export const contentModalSlice = createSlice({
             const mutate_state = state;
             mutate_state.content_types_settings[action.payload].settings_values = {};
             return mutate_state
+        },
+        setContentParentId(state, action) {
+            return {
+                ...state,
+                content_parent_id: action.payload
+            }
         }
     },
 })
 
 // Action creators are generated for each case reducer function
-export const {populateFieldValues, removeFieldValues} = contentModalSlice.actions
+export const {populateFieldValues, removeFieldValues, setContentParentId} = contentModalSlice.actions
 
 export default contentModalSlice.reducer

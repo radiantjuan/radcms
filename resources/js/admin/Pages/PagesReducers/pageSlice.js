@@ -3,6 +3,7 @@ import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 const initialState = {
     loading: true,
     content_modal_show: false,
+    current_content_id: 0,
     content_types: [],
     contents: []
 }

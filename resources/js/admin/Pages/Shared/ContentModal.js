@@ -3,6 +3,7 @@ import {Modal, Button, Container, Form} from 'react-bootstrap';
 import {useDispatch, useSelector} from "react-redux";
 import {fetchContentTypes, toggleContentModal} from "../PagesReducers/pageSlice";
 import ContentTypeSettings from "./ContentTypeSettings";
+import {setContentParentId} from "../PagesReducers/contentModalSlice";
 
 const ContentModal = (props) => {
     const {content_modal_show, content_types} = useSelector(({pageReducer}) => pageReducer);
@@ -49,7 +50,10 @@ const ContentModal = (props) => {
                 </Container>
             </Modal.Body>
             <Modal.Footer>
-                <Button variant="secondary" onClick={() => dispatch(toggleContentModal(false))}>
+                <Button variant="secondary" onClick={() => {
+                    dispatch(toggleContentModal(false));
+                    dispatch(setContentParentId(null))
+                }}>
                     Cancel
                 </Button>
                 <Button variant="primary" onClick={addEditContentHandler}>
